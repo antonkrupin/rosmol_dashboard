@@ -12,6 +12,9 @@ const ChartItem = (props) => {
     chart: {
       type,
       height: '30%',
+      style: {
+        fontFamily: 'Open Sans Bold',
+      }
     },
     legend: {
       layout: 'vertical',

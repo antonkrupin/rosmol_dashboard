@@ -38,6 +38,7 @@ const MainPage = () => {
           <ChartItem type={'areaspline'} title={'График расходов'} />
           <ChartItem type={'bar'} title={'График расходов'} />
           <ChartItem type={'scatter'} title={'График расходов'} />
+          <ChartItem type={'pie'} title={'График расходов'} />
         </div>
       </main>
     </>
