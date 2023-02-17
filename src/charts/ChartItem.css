@@ -1,0 +1,8 @@
+.chartItem {
+  width: 100%;
+  max-width: 90%;
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: rgba(131, 148, 193, 0.7);
+  border-radius: 10px;
+}
