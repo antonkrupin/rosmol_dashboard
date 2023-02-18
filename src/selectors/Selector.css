@@ -7,3 +7,7 @@
 fieldset {
   width: 40%;
 }
+
+fieldset input {
+  margin-top: 10px;
+}
