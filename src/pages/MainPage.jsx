@@ -17,10 +17,13 @@ const MainPage = () => {
             <h1>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex, corrupti!</h1>
           </div>
         </div>
-        <div className="selectors">
-          <Selector type="names" />
-          <Selector type="areas" />
-          <Selector type="criteria" />
+        <div className="filters">
+          <div className="selectors">
+              <Selector type="names" />
+              <Selector type="areas" />
+              <Selector type="criteria" />
+          </div>
+          <button>Фильтрация</button>
         </div>
         <div className="charts">
           <ChartItem type={'line'} title={'График расходов'} />

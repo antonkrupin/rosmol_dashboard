@@ -8,6 +8,7 @@ const initialState = {
   status: null,
   error: null,
   test: null,
+  filters: [],
 };
 
 export const fetchNames = createAsyncThunk(
@@ -27,8 +28,16 @@ const namesSlice = createSlice({
   name: 'names',
   initialState,
   reducers: {
-    setTest: (state, action) => {
-      state.test = 'test';
+    setNameFilter: (state, action) => {
+      state.filters.push(action.payload);
+    },
+    removeNameFilter: (state, action) => {
+      const { id } = action.payload;
+      state.filters.forEach((filter, index) => {
+        if (filter['id'] === id) {
+          state.filters.splice(index, 1)
+        }
+     });
     },
   },
   extraReducers: {
@@ -47,8 +56,9 @@ const namesSlice = createSlice({
   },
 });
 
-/* export const {
-  setTest,
-} = namesSlice.actions; */
+export const {
+  setNameFilter,
+  removeNameFilter,
+} = namesSlice.actions;
 
 export default namesSlice.reducer;

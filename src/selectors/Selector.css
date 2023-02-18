@@ -1,13 +1,23 @@
 .selectors {
   display: flex;
   margin-top: 20px;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 
 fieldset {
   width: 40%;
+  border-color: rgba(145, 130, 204, 1);
+  border-radius: 5px;
 }
 
 fieldset input {
   margin-top: 10px;
+}
+
+fieldset input:hover {
+  cursor: pointer;
+}
+
+fieldset label:hover {
+  cursor: pointer;
 }

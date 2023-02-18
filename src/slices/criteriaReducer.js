@@ -8,6 +8,7 @@ const initialState = {
   criteria: [],
   status: null,
   error: null,
+  filters: [],
 };
 
 export const fetchCriteria = createAsyncThunk(
@@ -27,7 +28,17 @@ const criteriaSlice = createSlice({
   name: 'criteria',
   initialState,
   reducers: {
-    
+    setCriteriaFiler: (state, action) => {
+      state.filters.push(action.payload);
+    },
+    removeCriteriaFilter: (state, action) => {
+      const { id } = action.payload;
+      state.filters.forEach((filter, index) => {
+        if (filter['id'] === id) {
+          state.filters.splice(index, 1)
+        }
+     });
+    },
   },
   extraReducers: {
     [fetchCriteria.pending]: (state) => {
@@ -44,5 +55,11 @@ const criteriaSlice = createSlice({
     },
   },
 });
+
+export const {
+  setCriteriaFiler,
+  removeCriteriaFilter,
+} = criteriaSlice.actions;
+
 
 export default criteriaSlice.reducer;

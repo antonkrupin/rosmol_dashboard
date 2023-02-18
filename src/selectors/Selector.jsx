@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux';
 
-import { fetchNames } from '../slices/namesReducer';
+import { fetchNames, setNameFilter, removeNameFilter } from '../slices/namesReducer';
 
-import { fetchAreas } from '../slices/areasReducer';
+import { fetchAreas, setAreaFilter, removeAreaFilter } from '../slices/areasReducer';
 
-import { fetchCriteria } from '../slices/criteriaReducer';
+import { fetchCriteria, setCriteriaFiler, removeCriteriaFilter } from '../slices/criteriaReducer';
 
 import { getNames, getAreas, getCriteria } from '../slices/selectors';
 
 import './Selector.css';
+import { current } from '@reduxjs/toolkit';
 
 const Selector = (props) => {
   const dispatch = useDispatch();
@@ -29,6 +30,23 @@ const Selector = (props) => {
 
   const criterias = useSelector(getCriteria);
 
+  const toggleSelected = (target, id, name, setFilter, removeFilter) => {
+    if (!target.hasAttribute("selected")) {
+      dispatch(setFilter({id, name}));
+      target.setAttribute("selected", true);
+    } else {
+      dispatch(removeFilter({id, name}));
+      target.removeAttribute("selected");
+    }
+  }
+
+  const checkBoxHandler = (e, setFilter, removeFilter) => {
+    const target = e.target.previousSibling ? e.target.previousSibling : e.target;
+    const id = target.id;
+    const name = target.name;
+    toggleSelected(target, id, name, setFilter, removeFilter);
+  }
+
   return (
     <>
       {type === 'names' && (
@@ -36,8 +54,13 @@ const Selector = (props) => {
           <legend>Выберите параметр</legend>
           {names.map((name) => (
             <div key={name.id}>
-              <input type="checkbox" id={name.id} name={name.name} />
-              <label htmlFor={name.name}>{name.name}</label>
+              <input
+                type="checkbox"
+                id={name.id}
+                name={name.name} 
+                onClick={(e) => checkBoxHandler(e, setNameFilter, removeNameFilter)}
+              />
+              <label htmlFor={name.id}>{name.name}</label>
             </div>
           ))}
         </fieldset>
@@ -47,8 +70,13 @@ const Selector = (props) => {
           <legend>Выберите параметр</legend>
           {areas.map((area) => (
             <div key={area.id}>
-              <input type="checkbox" id={area.id} name={area.name} />
-              <label htmlFor={area.name}>{area.name}</label>
+              <input
+                type="checkbox"
+                id={area.id}
+                name={area.name}
+                onClick={(e) => checkBoxHandler(e, setAreaFilter, removeAreaFilter)}
+              />
+              <label htmlFor={area.id}>{area.name}</label>
             </div>
           ))}
         </fieldset>
@@ -58,7 +86,12 @@ const Selector = (props) => {
           <legend>Выберите параметр</legend>
           {criterias.map((criteria) => (
             <div key={criteria.id}>
-              <input type="checkbox" id={criteria.id} name={criteria.name} />
+              <input
+                type="checkbox"
+                id={criteria.id}
+                name={criteria.name}
+                onClick={(e) => checkBoxHandler(e, setCriteriaFiler, removeCriteriaFilter)}
+              />
               <label htmlFor={criteria.name}>{criteria.name}</label>
             </div>
           ))}

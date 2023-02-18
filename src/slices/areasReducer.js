@@ -8,6 +8,7 @@ const initialState = {
   areas: [],
   status: null,
   error: null,
+  filters: [],
 };
 
 export const fetchAreas = createAsyncThunk(
@@ -27,7 +28,17 @@ const areasSlice = createSlice({
   name: 'areas',
   initialState,
   reducers: {
-    
+    setAreaFilter: (state, action) => {
+      state.filters.push(action.payload);
+    },
+    removeAreaFilter: (state, action) => {
+      const { id } = action.payload;
+      state.filters.forEach((filter, index) => {
+        if (filter['id'] === id) {
+          state.filters.splice(index, 1)
+        }
+     });
+    },
   },
   extraReducers: {
     [fetchAreas.pending]: (state) => {
@@ -45,8 +56,9 @@ const areasSlice = createSlice({
   },
 });
 
-/* export const {
-  setTest,
-} = namesSlice.actions; */
+export const {
+  setAreaFilter,
+  removeAreaFilter,
+} = areasSlice.actions;
 
 export default areasSlice.reducer;
