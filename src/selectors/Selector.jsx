@@ -42,7 +42,7 @@ const Selector = (props) => {
 
   const checkBoxHandler = (e, setFilter, removeFilter) => {
     const target = e.target.previousSibling ? e.target.previousSibling : e.target;
-    const id = target.id;
+    const id = target.id.split('_')[0];
     const name = target.name;
     toggleSelected(target, id, name, setFilter, removeFilter);
   }
@@ -88,11 +88,11 @@ const Selector = (props) => {
             <div key={criteria.id}>
               <input
                 type="checkbox"
-                id={criteria.id}
+                id={`${criteria.id}_cr`}
                 name={criteria.name}
                 onClick={(e) => checkBoxHandler(e, setCriteriaFiler, removeCriteriaFilter)}
               />
-              <label htmlFor={criteria.name}>{criteria.name}</label>
+              <label htmlFor={`${criteria.id}_cr`}>{criteria.name}</label>
             </div>
           ))}
         </fieldset>
