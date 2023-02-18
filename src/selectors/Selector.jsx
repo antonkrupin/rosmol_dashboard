@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import {
-  fetchData,
+  filterData,
   setNameFilter,
   removeNameFilter,
   setAreaFilter,
@@ -12,24 +12,31 @@ import {
   removeCriteriaFilter,
 } from '../slices/dataReducer';
 
-import { getNames, getAreas, getCriteria } from '../slices/selectors';
+import { getNames, getAreas, getCriteria, getFilteredNames, getFilteredAreas, getFilteredCriteria } from '../slices/selectors';
 
 import './Selector.css';
 
 const Selector = (props) => {
   const dispatch = useDispatch();
 
-  const { type, onChange } = props;
-
-  /* useEffect(() => {
-    dispatch(fetchData());
-  }, [dispatch]); */
+  const {
+    type,
+    onChange,
+    month, year,
+    namesP,
+    areasP,
+    criteriaP,
+  } = props;
 
   const names = useSelector(getNames);
 
   const areas = useSelector(getAreas);
 
   const criterias = useSelector(getCriteria);
+
+  const namesF = useSelector(getFilteredNames);
+  const areasF = useSelector(getFilteredAreas);
+  const criteriaF = useSelector(getFilteredCriteria);
 
   const toggleSelected = (target, id, name, setFilter, removeFilter) => {
     if (!target.hasAttribute("selected")) {
@@ -44,14 +51,14 @@ const Selector = (props) => {
   const checkBoxHandler = (e, setFilter, removeFilter) => {
     const target = e.target.previousSibling ? e.target.previousSibling : e.target;
     const id = target.id.split('_')[0];
-    const name = target.name;
+    const name = target.name === 'radio' ? target.value : target.name;
     toggleSelected(target, id, name, setFilter, removeFilter);
   }
 
   return (
     <>
       {type === 'names' && (
-        <fieldset onChange={onChange}>
+        <fieldset onChange={() => dispatch(filterData({namesF, areasF, criteriaF, month, year}))}>
           <legend>Выберите параметр</legend>
           {names.map((name) => (
             <div key={name.id}>
@@ -67,23 +74,20 @@ const Selector = (props) => {
         </fieldset>
       )}
       {type === 'areas' && (
-        <fieldset onChange={onChange}>
+        <fieldset onChange={() => dispatch(filterData({namesF, areasF, criteriaF, month, year}))}>
           <legend>Выберите параметр</legend>
           {areas.map((area) => (
             <div key={area.id}>
-              <input
-                type="checkbox"
-                id={area.id}
-                name={area.name}
-                onClick={(e) => checkBoxHandler(e, setAreaFilter, removeAreaFilter)}
-              />
-              <label htmlFor={area.id}>{area.name}</label>
+              <input type="radio" id={area.id}
+            name="radio" value={area.name} onClick={(e) => checkBoxHandler(e, setAreaFilter, removeAreaFilter)} />
+            <label htmlFor={area.id}>{area.name}</label>
+              
             </div>
           ))}
         </fieldset>
       )}
       {type === 'criteria' && (
-        <fieldset onChange={onChange}>
+        <fieldset onChange={() => dispatch(filterData({namesF, areasF, criteriaF, month, year}))}>
           <legend>Выберите параметр</legend>
           {criterias.map((criteria) => (
             <div key={criteria.id}>
@@ -103,21 +107,3 @@ const Selector = (props) => {
 };
 
 export default Selector;
-
-/*
-
-<fieldset>
-    <legend>Choose your monster's features:</legend>
-
-    <div>
-      <input type="checkbox" id="scales" name="scales" checked>
-      <label for="scales">Scales</label>
-    </div>
-
-    <div>
-      <input type="checkbox" id="horns" name="horns">
-      <label for="horns">Horns</label>
-    </div>
-</fieldset>
-
-*/

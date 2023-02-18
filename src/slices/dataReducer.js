@@ -9,10 +9,10 @@ const initialState = {
   criteria: [],
   status: null,
   error: null,
-  test: null,
   filtersNames: [],
   filtersAreas: [],
   filtersCriteria: [],
+  data: [],
 };
 
 export const fetchData = createAsyncThunk(
@@ -22,7 +22,6 @@ export const fetchData = createAsyncThunk(
       const responseNames = await axios.get(routes.names());
       const responseAreas = await axios.get(routes.areas());
       const responseCriteria = await axios.get(routes.criteria());
-      // const { results } = response.data;
 
       const names = responseNames.data.results;
       const areas = responseAreas.data.results;
@@ -35,36 +34,31 @@ export const fetchData = createAsyncThunk(
   },
 );
 
-/* export const fetchAreas = createAsyncThunk(
-  'names/fetchAreas',
-  async (_, { rejectWithValue }) => {
+export const filterData = createAsyncThunk(
+  'data/filterData',
+  async (attr, { rejectWithValue }) => {
+    const { namesF, criteriaF, areasF, month, year} = attr;
     try {
-      const response = await axios.get(routes.areas());
-      const { results } = response.data;
-      return results;
+      const response = await axios.post(routes.reformatter(), {
+        "name_filter": namesF.map((name) => name.id),
+        "crit_equal": criteriaF.map((criteria) => criteria.id), 
+        "area_equal": areasF.map((area) => String(area.id)),
+        "date_equal": [{"month": month, "year": year}]
+      });
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response.status);
     }
-  },
-);
-
-export const fetchCriteria = createAsyncThunk(
-  'names/fetchCriteria',
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await axios.get(routes.criteria());
-      const { results } = response.data;
-      return results;
-    } catch (error) {
-      return rejectWithValue(error.response.status);
-    }
-  },
-); */
+  }
+)
 
 const dataSlice = createSlice({
   name: 'data',
   initialState,
   reducers: {
+    setData: (state, action) => {
+      state.data = action.payload;
+    },
     setNameFilter: (state, action) => {
       state.filtersNames.push(action.payload);
     },
@@ -115,30 +109,18 @@ const dataSlice = createSlice({
       state.status = 'rejected';
       state.error = action.payload;
     },
-    /* [fetchAreas.pending]: (state) => {
+    [filterData.pending]: (state) => {
       state.status = 'loading';
       state.error = null;
     },
-    [fetchAreas.fulfilled]: (state, action) => {
+    [filterData.fulfilled]: (state, action) => {
       state.status = 'resolved';
-      state.areas = action.payload;
+      state.data = action.payload;
     },
-    [fetchAreas.rejected]: (state, action) => {
+    [filterData.rejected]: (state, action) => {
       state.status = 'rejected';
       state.error = action.payload;
     },
-    [fetchCriteria.pending]: (state) => {
-      state.status = 'loading';
-      state.error = null;
-    },
-    [fetchCriteria.fulfilled]: (state, action) => {
-      state.status = 'resolved';
-      state.criteria = action.payload;
-    },
-    [fetchCriteria.rejected]: (state, action) => {
-      state.status = 'rejected';
-      state.error = action.payload;
-    },*/
   },
 });
 

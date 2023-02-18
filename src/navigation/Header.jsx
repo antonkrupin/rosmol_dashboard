@@ -13,7 +13,7 @@ const Header = () => {
       </div>
       <nav>
         <button>Общедоступная информация</button>
-        <button className="danger">Авторизация</button>
+        <button>Авторизация</button>
       </nav>
     </div>
   )

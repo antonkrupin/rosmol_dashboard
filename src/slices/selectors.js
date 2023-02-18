@@ -9,3 +9,5 @@ export const getFilteredNames = (state) => state.data.filtersNames;
 export const getFilteredAreas = (state) => state.data.filtersAreas;
 
 export const getFilteredCriteria = (state) => state.data.filtersCriteria;
+
+export const getData = (state) => state.data.data;

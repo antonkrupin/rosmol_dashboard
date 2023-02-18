@@ -1,11 +1,24 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+
+import {
+  getFilteredNames,
+  getFilteredAreas,
+  getFilteredCriteria,
+  getData,
+} from '../slices/selectors';
 
 import './ChartItem.css';
 
 const ChartItem = (props) => {
   const { type, title } = props;
+
+  const names = useSelector(getFilteredNames);
+  const areas = useSelector(getFilteredAreas);
+  const criteria = useSelector(getFilteredCriteria);
+  const data = useSelector(getData);
 
   const getOptions = () => ({
     colors: ['#A2CA82', '#A54545', '#9E7D7D', '#8FA5DE', '#8A9AA9', '#9182CC', '#7C7C7C'],
@@ -16,39 +29,12 @@ const ChartItem = (props) => {
         fontFamily: 'Open Sans Bold',
       }
     },
-    /* legend: {
-      layout: 'vertical',
-      align: 'right',
-      verticalAlign: 'middle',
-      itemMarginTop: 10,
-      itemMarginBottom: 10
-    }, */
-    plotOptions: {
-      // работает на графике bar (будет полезно)
-      series: {
-        // pointPlacement: type === 'column' ? 'between' : 'on',
-        // pointPlacement: 'on',
-        // tickmarkPlacement: 'on',
-        // радиус границы
-        // borderRadius: 8,
-        // ширина линии для bar
-        // pointWidth: 20,
-        // pointPadding: 200,
-        // две последние не понятное, бесполезное. можно выбирать просто нажав на название
-        // selected: false,
-        // showCheckbox: true,
-        //убирает расстояние от старта, хорошо везде, кроме column
-        //pointPlacement: 'on',
-        // делает расстояние между группами, хз как работает
-        // groupPadding: 0.5,
-      },
-    },
     title: {
       text: title,
     },
     xAxis: {
       title: {
-        text: 'год',
+        // text: 'год',
         style: {
           color: '#242424',
           fontSize: '20px',
@@ -60,11 +46,11 @@ const ChartItem = (props) => {
           fontSize: '15px',
         }
       },
-      categories: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017]
+      categories: names.map((name) => name.name)
     },
     yAxis: {
       title: {
-        text: 'млн. рублей',
+        text: criteria.map((cr) => cr.name)[0] ? `${criteria.map((cr) => cr.name)[0]}\n(млн. рублей.)` : 'Данные не загружены',
         style: {
           color: '#242424',
           fontSize: '20px',
@@ -73,24 +59,8 @@ const ChartItem = (props) => {
     },
     series: [
       {
-        data: [1, 2, 1, 4, 3, 6, 0, 9],
-        name: 'Центральрый ФО',
-      },
-      {
-        data: [2, 7, 0, 4, 6, 20, 1, 3],
-        name: 'ЮФО',
-      },
-      {
-        data: [4, 12, 3, 1, 8, 5, 2, 3],
-        name: 'ДФО',
-      },
-      {
-        data: [5, 8, 5, 3, 2, 9, 11, 5],
-        name: 'ПФО',
-      },
-      {
-        data: [0, 3, 7, 1, 4, 3, 8, 6],
-        name: 'СЗФО',
+        data: data,
+        name: areas.map((area) => area.name).at(-1) ? `${areas.map((area) => area.name).at(-1)}` : 'Данные не загружены',
       },
     ],
   });
