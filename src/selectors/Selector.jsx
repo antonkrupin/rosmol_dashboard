@@ -1,28 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios'
+import React, { useEffect } from 'react';
+
 import { useSelector, useDispatch } from 'react-redux';
 
-import { fetchNames, setNameFilter, removeNameFilter } from '../slices/namesReducer';
-
-import { fetchAreas, setAreaFilter, removeAreaFilter } from '../slices/areasReducer';
-
-import { fetchCriteria, setCriteriaFiler, removeCriteriaFilter } from '../slices/criteriaReducer';
+import {
+  fetchData,
+  setNameFilter,
+  removeNameFilter,
+  setAreaFilter,
+  removeAreaFilter,
+  setCriteriaFiler,
+  removeCriteriaFilter,
+} from '../slices/dataReducer';
 
 import { getNames, getAreas, getCriteria } from '../slices/selectors';
 
 import './Selector.css';
-import { current } from '@reduxjs/toolkit';
 
 const Selector = (props) => {
   const dispatch = useDispatch();
 
-  const { type } = props;
+  const { type, onChange } = props;
 
-  useEffect(() => {
-    dispatch(fetchNames());
-    dispatch(fetchAreas());
-    dispatch(fetchCriteria());
-  }, [dispatch]);
+  /* useEffect(() => {
+    dispatch(fetchData());
+  }, [dispatch]); */
 
   const names = useSelector(getNames);
 
@@ -50,7 +51,7 @@ const Selector = (props) => {
   return (
     <>
       {type === 'names' && (
-        <fieldset>
+        <fieldset onChange={onChange}>
           <legend>Выберите параметр</legend>
           {names.map((name) => (
             <div key={name.id}>
@@ -66,7 +67,7 @@ const Selector = (props) => {
         </fieldset>
       )}
       {type === 'areas' && (
-        <fieldset>
+        <fieldset onChange={onChange}>
           <legend>Выберите параметр</legend>
           {areas.map((area) => (
             <div key={area.id}>
@@ -82,7 +83,7 @@ const Selector = (props) => {
         </fieldset>
       )}
       {type === 'criteria' && (
-        <fieldset>
+        <fieldset onChange={onChange}>
           <legend>Выберите параметр</legend>
           {criterias.map((criteria) => (
             <div key={criteria.id}>

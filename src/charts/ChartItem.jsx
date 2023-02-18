@@ -8,7 +8,7 @@ const ChartItem = (props) => {
   const { type, title } = props;
 
   const getOptions = () => ({
-    colors: ['#A2CA82', '#8FA5DE', '#9182CC', '#A54545', '#242424'],
+    colors: ['#A2CA82', '#A54545', '#9E7D7D', '#8FA5DE', '#8A9AA9', '#9182CC', '#7C7C7C'],
     chart: {
       type,
       // height: '30%',
@@ -74,7 +74,7 @@ const ChartItem = (props) => {
     series: [
       {
         data: [1, 2, 1, 4, 3, 6, 0, 9],
-        name: 'Центральрый федеральный округ',
+        name: 'Центральрый ФО',
       },
       {
         data: [2, 7, 0, 4, 6, 20, 1, 3],

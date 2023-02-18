@@ -1,7 +1,11 @@
-// import { createSelector } from '@reduxjs/toolkit';
+export const getNames = (state) => state.data.names;
 
-export const getNames = (state) => state.names.names;
+export const getAreas = (state) => state.data.areas;
 
-export const getAreas = (state) => state.areas.areas;
+export const getCriteria = (state) => state.data.criteria;
 
-export const getCriteria = (state) => state.criteria.criteria;
+export const getFilteredNames = (state) => state.data.filtersNames;
+
+export const getFilteredAreas = (state) => state.data.filtersAreas;
+
+export const getFilteredCriteria = (state) => state.data.filtersCriteria;

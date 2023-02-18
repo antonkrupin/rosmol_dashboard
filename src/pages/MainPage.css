@@ -2,31 +2,29 @@ main {
   background-color: rgb(240, 240, 237);
 }
 
-.header {
-  display: flex;
-  color: #FFFFFF;
-  background-color: #8394C1;
-}
-
-.logo {
-  display: flex;
-  width: 20%;
-  justify-content: center;
-}
-
-.title {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-}
-
 .charts {
   display: flex;
-  width: 70%;
+  /* width: 70%;
   margin-left: 15%;
-  margin-right: 15%;
-  flex-wrap: wrap;
+  margin-right: 15%; */
   justify-content: center;
+  align-items: start;
+}
+
+.chart {
+  width: 80%;
+  padding: 10px;
+  margin: 0 20px 20px 20px;
+  background-color: rgba(131, 148, 193, 0.7);
+  border-radius: 10px;
+}
+
+.typeFilter h4 {
+  margin: 0;
+}
+
+.typeFilter select:hover {
+  cursor: pointer;
 }
 
 .filters {
