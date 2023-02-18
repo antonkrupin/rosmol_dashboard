@@ -1,23 +1,11 @@
 import React from 'react';
-import axios from 'axios';
 
 import ChartItem from '../charts/ChartItem';
 import Selector from '../selectors/Selector';
 
-import routes from '../routes';
-
 import './MainPage.css';
 
 const MainPage = () => {
-  const response = axios.get('http://bossofcreeps.site/datastorage/areas/').then((data) => console.log(data));
-  console.log(response);
-  /* fetch('http://bossofcreeps.site/datastorage/areas/')
-  .then((response) => {
-    return response.json();
-  })
-  .then((data) => {
-    console.log(data);
-  }); */
   return (
     <>
       <main>
@@ -29,7 +17,9 @@ const MainPage = () => {
             <h1>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex, corrupti!</h1>
           </div>
         </div>
-        <Selector />
+        <Selector type="names" />
+        <Selector type="areas" />
+        <Selector type="criteria" />
         <div className="charts">
           <ChartItem type={'line'} title={'График расходов'} />
           <ChartItem type={'column'} title={'График расходов'} />

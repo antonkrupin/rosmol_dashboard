@@ -16,17 +16,19 @@ const ChartItem = (props) => {
         fontFamily: 'Open Sans Bold',
       }
     },
-    legend: {
+    /* legend: {
       layout: 'vertical',
       align: 'right',
       verticalAlign: 'middle',
       itemMarginTop: 10,
       itemMarginBottom: 10
-    },
+    }, */
     plotOptions: {
       // работает на графике bar (будет полезно)
       series: {
-        pointPlacement: type === ('column' || 'bar') ? 'between' : 'on',
+        // pointPlacement: type === 'column' ? 'between' : 'on',
+        // pointPlacement: 'on',
+        // tickmarkPlacement: 'on',
         // радиус границы
         // borderRadius: 8,
         // ширина линии для bar
@@ -39,7 +41,7 @@ const ChartItem = (props) => {
         //pointPlacement: 'on',
         // делает расстояние между группами, хз как работает
         // groupPadding: 0.5,
-      }
+      },
     },
     title: {
       text: title,
@@ -72,7 +74,7 @@ const ChartItem = (props) => {
     series: [
       {
         data: [1, 2, 1, 4, 3, 6, 0, 9],
-        name: 'СФО',
+        name: 'Центральрый федеральный округ',
       },
       {
         data: [2, 7, 0, 4, 6, 20, 1, 3],
