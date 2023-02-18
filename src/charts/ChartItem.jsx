@@ -11,7 +11,7 @@ const ChartItem = (props) => {
     colors: ['#A2CA82', '#8FA5DE', '#9182CC', '#A54545', '#242424'],
     chart: {
       type,
-      height: '30%',
+      // height: '30%',
       style: {
         fontFamily: 'Open Sans Bold',
       }

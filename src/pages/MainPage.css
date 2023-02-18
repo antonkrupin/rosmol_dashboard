@@ -28,3 +28,48 @@ main {
   flex-wrap: wrap;
   justify-content: center;
 }
+
+@media (max-width: 575px) {
+  .charts {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+  .charts {
+    width: 95%;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .charts {
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+}
+
+/* @media (min-width: 992px) and (max-width: 1199px) {
+  .filmItem {
+    max-width: 30%;
+  }
+}
+@media (min-width: 1200px) and (max-width: 1499px) {
+  .filmItem {
+    max-width: 30%;
+  }
+}
+@media (min-width: 1500px) and (max-width: 1699px) {
+  .filmItem {
+    max-width: 25%;
+  }
+}
+@media (min-width: 1700px) {
+  .filmItem {
+    max-width: 20%;
+  }
+} */
