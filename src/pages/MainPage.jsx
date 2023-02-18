@@ -17,9 +17,11 @@ const MainPage = () => {
             <h1>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex, corrupti!</h1>
           </div>
         </div>
-        <Selector type="names" />
-        <Selector type="areas" />
-        <Selector type="criteria" />
+        <div className="selectors">
+          <Selector type="names" />
+          <Selector type="areas" />
+          <Selector type="criteria" />
+        </div>
         <div className="charts">
           <ChartItem type={'line'} title={'График расходов'} />
           <ChartItem type={'column'} title={'График расходов'} />

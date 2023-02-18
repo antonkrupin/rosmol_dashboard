@@ -1,3 +1,9 @@
-select {
-  margin: 20px;
+.selectors {
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+fieldset {
+  width: 40%;
 }

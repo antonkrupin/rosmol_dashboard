@@ -32,37 +32,58 @@ const Selector = (props) => {
   return (
     <>
       {type === 'names' && (
-        <select className="select">
-          <option value="" disabled>Выберите параметр</option>
+        <fieldset>
+          <legend>Выберите параметр</legend>
           {names.map((name) => (
-            <option key={name.id} value={name.id}>
-              {name.name}
-            </option>
+            <div key={name.id}>
+              <input type="checkbox" id={name.id} name={name.name} />
+              <label htmlFor={name.name}>{name.name}</label>
+            </div>
           ))}
-        </select>
+        </fieldset>
       )}
       {type === 'areas' && (
-        <select className="select">
-          <option value="" disabled>Выберите параметр</option>
+        <fieldset>
+          <legend>Выберите параметр</legend>
           {areas.map((area) => (
-            <option key={area.id} value={area.id}>
-              {area.name}
-            </option>
+            <div key={area.id}>
+              <input type="checkbox" id={area.id} name={area.name} />
+              <label htmlFor={area.name}>{area.name}</label>
+            </div>
           ))}
-        </select>
+        </fieldset>
       )}
       {type === 'criteria' && (
-        <select className="select">
-          <option value="" disabled>Выберите параметр</option>
+        <fieldset>
+          <legend>Выберите параметр</legend>
           {criterias.map((criteria) => (
-            <option key={criteria.id} value={criteria.id}>
-              {criteria.name}
-            </option>
+            <div key={criteria.id}>
+              <input type="checkbox" id={criteria.id} name={criteria.name} />
+              <label htmlFor={criteria.name}>{criteria.name}</label>
+            </div>
           ))}
-        </select>
+        </fieldset>
       )}
     </>
   )
 };
 
 export default Selector;
+
+/*
+
+<fieldset>
+    <legend>Choose your monster's features:</legend>
+
+    <div>
+      <input type="checkbox" id="scales" name="scales" checked>
+      <label for="scales">Scales</label>
+    </div>
+
+    <div>
+      <input type="checkbox" id="horns" name="horns">
+      <label for="horns">Horns</label>
+    </div>
+</fieldset>
+
+*/
