@@ -4,9 +4,6 @@ main {
 
 .charts {
   display: flex;
-  /* width: 70%;
-  margin-left: 15%;
-  margin-right: 15%; */
   justify-content: center;
   align-items: start;
 }
@@ -15,7 +12,7 @@ main {
   width: 80%;
   padding: 10px;
   margin: 0 20px 20px 20px;
-  background-color: rgba(131, 148, 193, 0.7);
+  background-color: rgba(131, 148, 193, 1);
   border-radius: 10px;
 }
 
@@ -27,11 +24,27 @@ main {
   cursor: pointer;
 }
 
+.lists {
+  display: flex;
+  width: 100%;
+}
+
+.lists div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 25px;
+}
+
+.lists h4 {
+  margin: 0 0 10px 0;
+}
+
 .filters {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 
 .filters button {
@@ -80,24 +93,3 @@ main {
     margin-right: 5%;
   }
 }
-
-/* @media (min-width: 992px) and (max-width: 1199px) {
-  .filmItem {
-    max-width: 30%;
-  }
-}
-@media (min-width: 1200px) and (max-width: 1499px) {
-  .filmItem {
-    max-width: 30%;
-  }
-}
-@media (min-width: 1500px) and (max-width: 1699px) {
-  .filmItem {
-    max-width: 25%;
-  }
-}
-@media (min-width: 1700px) {
-  .filmItem {
-    max-width: 20%;
-  }
-} */

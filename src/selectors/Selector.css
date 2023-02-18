@@ -6,8 +6,11 @@
 
 fieldset {
   width: 40%;
+  max-height: 300px;
+  overflow: scroll;
   border-color: rgba(145, 130, 204, 1);
   border-radius: 5px;
+  margin: 0 10px 0 10px;
 }
 
 fieldset input {
