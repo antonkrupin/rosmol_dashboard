@@ -9,8 +9,8 @@ import routes from '../routes';
 import './MainPage.css';
 
 const MainPage = () => {
-  /* const response = axios.get('http://bossofcreeps.site/datastorage/areas/').then((data) => console.log(data));
-  console.log(response); */
+  const response = axios.get('http://bossofcreeps.site/datastorage/areas/').then((data) => console.log(data));
+  console.log(response);
   /* fetch('http://bossofcreeps.site/datastorage/areas/')
   .then((response) => {
     return response.json();
