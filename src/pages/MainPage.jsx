@@ -11,7 +11,7 @@ import {
   getFilteredNames,
   getFilteredAreas,
   getFilteredCriteria,
-  getData,
+  getStatus,
 } from '../slices/selectors';
 
 import './MainPage.css';
@@ -22,11 +22,11 @@ const MainPage = () => {
   const names = useSelector(getFilteredNames);
   const areas = useSelector(getFilteredAreas);
   const criteria = useSelector(getFilteredCriteria);
-  const data = useSelector(getData);
-
+  const status = useSelector(getStatus);
+  
   useEffect(() => {
     dispatch(fetchData());
-  }, [dispatch, data]);
+  }, [dispatch]);
 
   const [type, setType] = useState('column');
 
@@ -42,7 +42,7 @@ const MainPage = () => {
           <div className="lists">
             <div>
               <h4>Выберите месяц:</h4>
-              <select onChange={(e) => setMonth(e.target.value)} >
+              <select onChange={(e) => setMonth(e.target.value)} disabled={status === 'updating'}>
                 <option value="" disabled>выберите месяц</option>
                 <option value="1">Январь</option>
                 <option value="2">Февраль</option>
@@ -60,7 +60,7 @@ const MainPage = () => {
             </div>
             <div>
               <h4>Выберите год:</h4>
-              <select onChange={(e) => setYear(e.target.value)} >
+              <select onChange={(e) => setYear(e.target.value)} disabled={status === 'updating'}>
                 <option value="" disabled>выберите год</option>
                 <option value="2023">2023</option>
                 <option value="2022">2022</option>
@@ -69,15 +69,15 @@ const MainPage = () => {
             </div>
           </div>
           <div className="selectors">
-            <Selector type="names" month={month} year={year}/>
-            <Selector type="areas" month={month} year={year} />
-            <Selector type="criteria" month={month} year={year} />
+            <Selector type="names" month={month} year={year} data={{names, areas, criteria}}/>
+            <Selector type="areas" month={month} year={year} data={{names, areas, criteria}}/>
+            <Selector type="criteria" month={month} year={year} data={{names, areas, criteria}}/>
           </div>
         </div>
         <div className="charts">
           <div className="typeFilter">
             <h4>Выберите тип графика:</h4>
-            <select onChange={(e) => setType(e.target.value)}>
+            <select onChange={(e) => setType(e.target.value)} disabled={status === 'updating'}>
               <option value="" disabled>Выберите тип графика</option>
               <option value="column">Столбцы</option>
               <option value="line">Линейный</option>

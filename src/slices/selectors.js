@@ -11,3 +11,5 @@ export const getFilteredAreas = (state) => state.data.filtersAreas;
 export const getFilteredCriteria = (state) => state.data.filtersCriteria;
 
 export const getData = (state) => state.data.data;
+
+export const getStatus = (state) => state.data.status;

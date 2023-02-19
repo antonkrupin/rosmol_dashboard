@@ -59,6 +59,9 @@ const dataSlice = createSlice({
     setData: (state, action) => {
       state.data = action.payload;
     },
+    setStatus : (state, action) => {
+      state.status = action.payload;
+    },
     setNameFilter: (state, action) => {
       state.filtersNames.push(action.payload);
     },
@@ -125,6 +128,8 @@ const dataSlice = createSlice({
 });
 
 export const {
+  setData,
+  setStatus,
   setNameFilter,
   removeNameFilter,
   setAreaFilter,

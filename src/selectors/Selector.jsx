@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
-
+import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-
+import routes from '../routes';
 import {
+  setData,
+  setStatus,
   filterData,
   setNameFilter,
   removeNameFilter,
@@ -12,9 +14,11 @@ import {
   removeCriteriaFilter,
 } from '../slices/dataReducer';
 
-import { getNames, getAreas, getCriteria, getFilteredNames, getFilteredAreas, getFilteredCriteria } from '../slices/selectors';
+import { getNames, getAreas, getCriteria, getFilteredNames, getFilteredAreas, getFilteredCriteria, getStatus } from '../slices/selectors';
 
 import './Selector.css';
+
+
 
 const Selector = (props) => {
   const dispatch = useDispatch();
@@ -28,15 +32,37 @@ const Selector = (props) => {
     criteriaP,
   } = props;
 
+  const filterData = async (names, areas, criteria, month, year) => {
+    if ((names.length !== 0) && (areas.length !== 0) && (criteria.length !== 0)) {
+      console.log('start');
+      dispatch(setStatus('updating'));
+      const response = await axios.post(routes.reformatter(), {
+        "name_filter": names.map((name) => name.id),
+        "crit_equal": criteria.map((criteria) => criteria.id), 
+        "area_equal": areas.map((area) => String(area.id)),
+        "date_equal": [{"month": month, "year": year}]
+      });
+      console.log(`response.data`, response.data);
+      dispatch(setStatus('resolved'));
+      console.log('finish');
+      dispatch(setData(response.data));
+      return response.data;
+    } else {
+      dispatch(setData([]));
+    }
+  }
+
+  useEffect(() => {
+    filterData(props.data.names, props.data.areas, props.data.criteria, month, year);
+  }, [props.data.names, props.data.areas, props.data.criteria, month, year]);
+
   const names = useSelector(getNames);
 
   const areas = useSelector(getAreas);
 
   const criterias = useSelector(getCriteria);
 
-  const namesF = useSelector(getFilteredNames);
-  const areasF = useSelector(getFilteredAreas);
-  const criteriaF = useSelector(getFilteredCriteria);
+  const status = useSelector(getStatus);
 
   const toggleSelected = (target, id, name, setFilter, removeFilter) => {
     if (!target.hasAttribute("selected")) {
@@ -58,7 +84,7 @@ const Selector = (props) => {
   return (
     <>
       {type === 'names' && (
-        <fieldset onChange={() => dispatch(filterData({namesF, areasF, criteriaF, month, year}))}>
+        <fieldset disabled={status === 'updating'}>
           <legend>Выберите параметр</legend>
           {names.map((name) => (
             <div key={name.id}>
@@ -74,7 +100,7 @@ const Selector = (props) => {
         </fieldset>
       )}
       {type === 'areas' && (
-        <fieldset onChange={() => dispatch(filterData({namesF, areasF, criteriaF, month, year}))}>
+        <fieldset disabled={status === 'updating'}>
           <legend>Выберите параметр</legend>
           {areas.map((area) => (
             <div key={area.id}>
@@ -87,7 +113,7 @@ const Selector = (props) => {
         </fieldset>
       )}
       {type === 'criteria' && (
-        <fieldset onChange={() => dispatch(filterData({namesF, areasF, criteriaF, month, year}))}>
+        <fieldset disabled={status === 'updating'}>
           <legend>Выберите параметр</legend>
           {criterias.map((criteria) => (
             <div key={criteria.id}>
