@@ -14,6 +14,21 @@ main {
   margin: 0 20px 20px 20px;
   background-color: rgba(131, 148, 193, 1);
   border-radius: 10px;
+  color: rgba(165, 69, 69, 1);
+}
+
+.emptyChart {
+  width: 80%;
+  padding: 10px;
+  margin: 0 20px 20px 20px;
+  background-color: rgba(217, 217, 217, 1);
+  border-radius: 10px;
+  color: rgba(165, 69, 69, 1);
+  text-align: center;
+}
+
+.displayNone {
+  display: none;
 }
 
 .typeFilter h4 {

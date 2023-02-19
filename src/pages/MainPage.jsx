@@ -12,6 +12,7 @@ import {
   getFilteredAreas,
   getFilteredCriteria,
   getStatus,
+  getData,
 } from '../slices/selectors';
 
 import './MainPage.css';
@@ -23,6 +24,7 @@ const MainPage = () => {
   const areas = useSelector(getFilteredAreas);
   const criteria = useSelector(getFilteredCriteria);
   const status = useSelector(getStatus);
+  const chartData = useSelector(getData);
   
   useEffect(() => {
     dispatch(fetchData());
@@ -56,6 +58,7 @@ const MainPage = () => {
                 <option value="10">Октябрь</option>
                 <option value="11">Ноябрь</option>
                 <option value="12">Декабрь</option>
+                <option value="13">За весь год</option>
               </select>
             </div>
             <div>
@@ -75,7 +78,7 @@ const MainPage = () => {
           </div>
         </div>
         <div className="charts">
-          <div className="typeFilter">
+          <div className={`typeFilter ${chartData.length === 0 ? 'displayNone' : ''}`}>
             <h4>Выберите тип графика:</h4>
             <select onChange={(e) => setType(e.target.value)} disabled={status === 'updating'}>
               <option value="" disabled>Выберите тип графика</option>
@@ -89,9 +92,18 @@ const MainPage = () => {
               <option value="pie">Pie</option>
             </select>
           </div>
-          <div className="chart">
-            <ChartItem type={type} title={'График расходов'} namesP={names} areasP={areas} criteriaP={criteria}/>
-          </div>
+          {chartData.length === 0 ? 
+              (
+                <div className="emptyChart">
+                  <h2>Для построения графика не хватает данных. </h2>
+                  <h3>В каждом столбце выберите хотя бы один параметр в каждом столбце.</h3>
+                </div>
+              ) : 
+              (
+                <div className="chart"> 
+                  <ChartItem type={type} title={'График расходов'}/>
+                </div>
+              )}
         </div>
       </main>
     </>

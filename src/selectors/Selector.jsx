@@ -5,7 +5,6 @@ import routes from '../routes';
 import {
   setData,
   setStatus,
-  filterData,
   setNameFilter,
   removeNameFilter,
   setAreaFilter,
@@ -14,38 +13,36 @@ import {
   removeCriteriaFilter,
 } from '../slices/dataReducer';
 
-import { getNames, getAreas, getCriteria, getFilteredNames, getFilteredAreas, getFilteredCriteria, getStatus } from '../slices/selectors';
+import {
+  getNames,
+  getAreas,
+  getCriteria,
+  getStatus
+} from '../slices/selectors';
 
 import './Selector.css';
-
-
 
 const Selector = (props) => {
   const dispatch = useDispatch();
 
   const {
     type,
-    onChange,
-    month, year,
-    namesP,
-    areasP,
-    criteriaP,
+    month,
+    year,
+    data,
   } = props;
 
   const filterData = async (names, areas, criteria, month, year) => {
     if ((names.length !== 0) && (areas.length !== 0) && (criteria.length !== 0)) {
-      console.log('start');
       dispatch(setStatus('updating'));
       const response = await axios.post(routes.reformatter(), {
         "name_filter": names.map((name) => name.id),
         "crit_equal": criteria.map((criteria) => criteria.id), 
         "area_equal": areas.map((area) => String(area.id)),
-        "date_equal": [{"month": month, "year": year}]
+        "date_equal": [{"month": Number(month) !== 13 ? month : null , "year": year}]
       });
-      console.log(`response.data`, response.data);
-      dispatch(setStatus('resolved'));
-      console.log('finish');
       dispatch(setData(response.data));
+      dispatch(setStatus('resolved'));
       return response.data;
     } else {
       dispatch(setData([]));
@@ -53,8 +50,8 @@ const Selector = (props) => {
   }
 
   useEffect(() => {
-    filterData(props.data.names, props.data.areas, props.data.criteria, month, year);
-  }, [props.data.names, props.data.areas, props.data.criteria, month, year]);
+    filterData(data.names, data.areas, data.criteria, month, year);
+  }, [data.names, data.areas, data.criteria, month, year]);
 
   const names = useSelector(getNames);
 
@@ -77,7 +74,7 @@ const Selector = (props) => {
   const checkBoxHandler = (e, setFilter, removeFilter) => {
     const target = e.target.previousSibling ? e.target.previousSibling : e.target;
     const id = target.id.split('_')[0];
-    const name = target.name === 'radio' ? target.value : target.name;
+    const name = target.name; // === 'radio' ? target.value : target.name;
     toggleSelected(target, id, name, setFilter, removeFilter);
   }
 
@@ -104,10 +101,13 @@ const Selector = (props) => {
           <legend>Выберите параметр</legend>
           {areas.map((area) => (
             <div key={area.id}>
-              <input type="radio" id={area.id}
-            name="radio" value={area.name} onClick={(e) => checkBoxHandler(e, setAreaFilter, removeAreaFilter)} />
-            <label htmlFor={area.id}>{area.name}</label>
-              
+              <input
+                type="checkbox"
+                id={area.id}
+                name={area.name} 
+                onClick={(e) => checkBoxHandler(e, setAreaFilter, removeAreaFilter,)}
+              />
+              <label htmlFor={area.id}>{area.name}</label>
             </div>
           ))}
         </fieldset>

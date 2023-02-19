@@ -34,24 +34,6 @@ export const fetchData = createAsyncThunk(
   },
 );
 
-export const filterData = createAsyncThunk(
-  'data/filterData',
-  async (attr, { rejectWithValue }) => {
-    const { namesF, criteriaF, areasF, month, year} = attr;
-    try {
-      const response = await axios.post(routes.reformatter(), {
-        "name_filter": namesF.map((name) => name.id),
-        "crit_equal": criteriaF.map((criteria) => criteria.id), 
-        "area_equal": areasF.map((area) => String(area.id)),
-        "date_equal": [{"month": month, "year": year}]
-      });
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.status);
-    }
-  }
-)
-
 const dataSlice = createSlice({
   name: 'data',
   initialState,
@@ -59,7 +41,7 @@ const dataSlice = createSlice({
     setData: (state, action) => {
       state.data = action.payload;
     },
-    setStatus : (state, action) => {
+    setStatus: (state, action) => {
       state.status = action.payload;
     },
     setNameFilter: (state, action) => {
@@ -109,18 +91,6 @@ const dataSlice = createSlice({
       state.criteria = criteria;
     },
     [fetchData.rejected]: (state, action) => {
-      state.status = 'rejected';
-      state.error = action.payload;
-    },
-    [filterData.pending]: (state) => {
-      state.status = 'loading';
-      state.error = null;
-    },
-    [filterData.fulfilled]: (state, action) => {
-      state.status = 'resolved';
-      state.data = action.payload;
-    },
-    [filterData.rejected]: (state, action) => {
       state.status = 'rejected';
       state.error = action.payload;
     },

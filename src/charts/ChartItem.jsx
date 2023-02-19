@@ -60,7 +60,7 @@ const ChartItem = (props) => {
     series: [
       {
         data: data,
-        name: areas.map((area) => area.name).at(-1) ? `${areas.map((area) => area.name).at(-1)}` : 'Данные не загружены',
+        name: areas.map((area) => area.name).at(-1) ? `${areas.map((area) => area.name)}` : 'Данные не загружены',
       },
     ],
   });
