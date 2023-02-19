@@ -1,5 +1,7 @@
 # Rosmol Dashboard app
 
+For use this application - clone repo and use available scripts listed below.
+
 ## Available Scripts
 
 In the project directory, you can run:
