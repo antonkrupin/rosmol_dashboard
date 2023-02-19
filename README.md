@@ -6,9 +6,9 @@ For use this application - clone repo and use available scripts listed below.
 
 In the project directory, you can run:
 
-### 'npm install'
+### `npm install`
 
-Install dependencies, prepear to run applications
+Install dependencies, prepear application to run.
 
 ### `npm start`
 
